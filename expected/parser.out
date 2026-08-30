@@ -1,0 +1,62 @@
+-- round trip
+SELECT 'E01000001'::gsscode::text;
+   text    
+-----------
+ E01000001
+(1 row)
+
+SELECT 'K02000001'::gsscode::text;
+   text    
+-----------
+ K02000001
+(1 row)
+
+SELECT 'w00000001'::gsscode::text;  -- lowercase normalised to upper
+   text    
+-----------
+ W00000001
+(1 row)
+
+-- is_valid
+SELECT is_valid('E01000001');
+ is_valid 
+----------
+ t
+(1 row)
+
+SELECT is_valid('E0100000');    -- too short
+ is_valid 
+----------
+ f
+(1 row)
+
+SELECT is_valid('E010000011');  -- too long
+ is_valid 
+----------
+ f
+(1 row)
+
+SELECT is_valid('101000001');   -- no leading letter
+ is_valid 
+----------
+ f
+(1 row)
+
+SELECT is_valid('EA1000001');   -- non-digit in type
+ is_valid 
+----------
+ f
+(1 row)
+
+SELECT is_valid('E01999999');   -- reserved code: still valid syntax
+ is_valid 
+----------
+ t
+(1 row)
+
+-- invalid input raises
+SELECT 'E0100000'::gsscode;
+ERROR:  cannot parse input for type gsscode
+LINE 1: SELECT 'E0100000'::gsscode;
+               ^
+HINT:  expected 9 characters: 1 letter followed by 8 digits, eg "E01000001"

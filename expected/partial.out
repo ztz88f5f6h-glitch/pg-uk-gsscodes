@@ -1,0 +1,114 @@
+-- scalar %% / !%%: country only
+SELECT 'E01000001'::gsscode % 'E';
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'W01000001'::gsscode % 'E';
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT 'W01000001'::gsscode !% 'E';
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'E01000001'::gsscode !% 'E';
+ ?column? 
+----------
+ f
+(1 row)
+
+-- scalar %% / !%%: country+type
+SELECT 'E01000001'::gsscode % 'E01';
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'E02000001'::gsscode % 'E01';
+ ?column? 
+----------
+ f
+(1 row)
+
+-- scalar %%: full code behaves like =
+SELECT 'E01000001'::gsscode % 'E01000001';
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'E01000002'::gsscode % 'E01000001';
+ ?column? 
+----------
+ f
+(1 row)
+
+-- invalid-length prefixes never match, no error
+SELECT 'E01000001'::gsscode % 'E0100';
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT 'E01000001'::gsscode % 'E0';
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT 'E01000001'::gsscode % '';
+ ?column? 
+----------
+ f
+(1 row)
+
+-- array form
+SELECT 'E01000001'::gsscode % ARRAY['E01','E02'];
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'E02000001'::gsscode % ARRAY['E01','E02'];
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'W01000001'::gsscode % ARRAY['E01','E02'];
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT 'E01000001'::gsscode !% ARRAY['S01','S02'];
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'E01000001'::gsscode % ARRAY[]::text[];
+ ?column? 
+----------
+ f
+(1 row)
+
+-- %% drives an index scan via the btree operator family
+CREATE TEMP TABLE partial_sample (code gsscode);
+INSERT INTO partial_sample
+   SELECT ('E01' || lpad(i::text, 6, '0'))::gsscode FROM generate_series(1,50) i;
+INSERT INTO partial_sample VALUES ('W01000001'), ('S01000001');
+CREATE INDEX ON partial_sample USING btree (code);
+ANALYZE partial_sample;
+SELECT count(*) FROM partial_sample WHERE code % 'E01';
+ count 
+-------
+    50
+(1 row)
+

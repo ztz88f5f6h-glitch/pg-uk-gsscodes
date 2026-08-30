@@ -1,0 +1,66 @@
+SELECT count(*) FROM gsscode_types;
+ count 
+-------
+   206
+(1 row)
+
+SELECT description('E01000001'::gsscode);
+          description           
+--------------------------------
+ Lower layer Super Output Areas
+(1 row)
+
+SELECT description('E01');
+          description           
+--------------------------------
+ Lower layer Super Output Areas
+(1 row)
+
+SELECT description('e01');           -- case insensitive
+          description           
+--------------------------------
+ Lower layer Super Output Areas
+(1 row)
+
+SELECT description('E01000001');     -- longer text truncates to 3 chars
+          description           
+--------------------------------
+ Lower layer Super Output Areas
+(1 row)
+
+SELECT description('K02'::text);
+  description   
+----------------
+ United Kingdom
+(1 row)
+
+SELECT description('K03'::text);
+  description  
+---------------
+ Great Britain
+(1 row)
+
+SELECT description('K04'::text);
+    description    
+-------------------
+ England and Wales
+(1 row)
+
+SELECT description('S01'::text);
+ description 
+-------------
+ Data Zones
+(1 row)
+
+SELECT description('W01'::text);
+          description           
+--------------------------------
+ Lower layer Super Output Areas
+(1 row)
+
+SELECT description('ZZ'::text) IS NULL;  -- unknown prefix
+ ?column? 
+----------
+ t
+(1 row)
+

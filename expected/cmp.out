@@ -1,0 +1,100 @@
+SELECT 'E01000001'::gsscode = 'E01000001'::gsscode;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'E01000001'::gsscode <> 'E02000001'::gsscode;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'E01000001'::gsscode < 'E01000002'::gsscode;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'E01000001'::gsscode > 'E01000002'::gsscode;
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT 'E01000001'::gsscode <= 'E01000001'::gsscode;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'E01000001'::gsscode >= 'E01000001'::gsscode;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- country sorts before type sorts before area
+SELECT 'E99000001'::gsscode < 'J01000001'::gsscode;  -- country order
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'E01999999'::gsscode < 'E02000001'::gsscode;  -- type order
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT 'E01000001'::gsscode < 'E01000002'::gsscode;  -- area order
+ ?column? 
+----------
+ t
+(1 row)
+
+-- ORDER BY matches expected country/type/area sequence
+CREATE TEMP TABLE cmp_sample (code gsscode);
+INSERT INTO cmp_sample VALUES
+   ('W01000001'), ('E02000001'), ('E01000002'), ('K02000001'), ('E01000001');
+SELECT code FROM cmp_sample ORDER BY code;
+   code    
+-----------
+ E01000001
+ E01000002
+ E02000001
+ K02000001
+ W01000001
+(5 rows)
+
+-- accessors
+SELECT country('E01000001'::gsscode);
+ country 
+---------
+ E
+(1 row)
+
+SELECT gss_type('E01000001'::gsscode);
+ gss_type 
+----------
+        1
+(1 row)
+
+SELECT area('E01000001'::gsscode);
+ area 
+------
+    1
+(1 row)
+
+SELECT gss_type('K99000003'::gsscode);
+ gss_type 
+----------
+       99
+(1 row)
+
+SELECT area('E01999999'::gsscode);
+  area  
+--------
+ 999999
+(1 row)
+
