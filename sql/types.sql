@@ -10,3 +10,10 @@ SELECT description('K04'::text);
 SELECT description('S01'::text);
 SELECT description('W01'::text);
 SELECT description('ZZ'::text) IS NULL;  -- unknown prefix
+
+-- whole-row form
+SELECT (type_info('E01000001'::gsscode)).name;
+SELECT (type_info('E01000001'::gsscode)).abbreviation;
+SELECT (type_info('K02'::text)).name;
+SELECT (type_info('K02'::text)).theme;
+SELECT type_info('ZZ'::text) IS NULL;  -- unknown prefix

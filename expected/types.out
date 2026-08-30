@@ -64,3 +64,34 @@ SELECT description('ZZ'::text) IS NULL;  -- unknown prefix
  t
 (1 row)
 
+-- whole-row form
+SELECT (type_info('E01000001'::gsscode)).name;
+              name              
+--------------------------------
+ Lower layer Super Output Areas
+(1 row)
+
+SELECT (type_info('E01000001'::gsscode)).abbreviation;
+ abbreviation 
+--------------
+ LSOA
+(1 row)
+
+SELECT (type_info('K02'::text)).name;
+      name      
+----------------
+ United Kingdom
+(1 row)
+
+SELECT (type_info('K02'::text)).theme;
+     theme      
+----------------
+ Administrative
+(1 row)
+
+SELECT type_info('ZZ'::text) IS NULL;  -- unknown prefix
+ ?column? 
+----------
+ t
+(1 row)
+

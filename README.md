@@ -136,6 +136,16 @@ country+type prefix actually means, eg `description('E01')` ->
 `'Lower layer Super Output Areas'`. Both overloads truncate to the first
 3 characters, so a full 9-character code works too.
 
+`type_info(gsscode)` and `type_info(text)` return the whole
+`gsscode_types` row instead of just `name` -- `abbreviation`, `theme`,
+`coverage` and `status` as well -- for when you want more than one field
+without hand-writing the join yourself:
+
+    SELECT (type_info('E01000001'::gsscode)).*;
+    --  gss | name                            | abbreviation | theme                       | coverage | status
+    -- -----+---------------------------------+--------------+------------------------------+----------+---------
+    --  E01 | Lower layer Super Output Areas  | LSOA         | Statistical Building Block  | England  | Current
+
 The data comes from a private `gsscode_types` table shipped with the
 extension (206 rows: gss, name, abbreviation, theme, coverage, status),
 seeded from the ONS Register of Geographic Codes -- a small, stable type
@@ -144,8 +154,25 @@ NOT hold individual area names (eg what `E01000001` itself is called, as
 opposed to what "E01" as a type means) -- that's a much larger,
 per-installation dataset (500,000+ rows, changing as boundaries are
 redrawn) that stays external rather than being baked into a general-
-purpose extension. If you have your own copy of the ONS Code History
-Database, wiring up individual-code names is a one-line function:
+purpose extension.
+
+The individual-code names live in ONS's Code History Database (CHD), not
+the Register of Geographic Codes this extension ships:
+
+  - [Code History Database (CHD)](https://www.ons.gov.uk/methodology/geography/geographicalproducts/namescodesandlookups/codehistorydatabasechd)
+    -- ONS's own overview/methodology page for the CHD.
+  - [Open Geography Portal](https://geoportal.statistics.gov.uk) -- where
+    the actual CHD download (CSV or MS Access) is hosted, alongside the
+    RGC and everything else ONS publishes geographically. Search for
+    "Code History Database" to find the current dated release.
+  - [Names, codes and lookups](https://www.ons.gov.uk/methodology/geography/geographicalproducts/namescodesandlookups)
+    -- ONS's top-level index of everything in this space, including
+    theme-specific names-and-codes listings (eg [administrative
+    geographies](https://www.ons.gov.uk/methodology/geography/geographicalproducts/namescodesandlookups/namesandcodeslistings/namesandcodesforadministrativegeography))
+    if you only need one geography type rather than the full CHD.
+
+If you have your own copy loaded into a table, wiring up individual-code
+names is a one-line function:
 
     CREATE FUNCTION name(gsscode) RETURNS text LANGUAGE sql STABLE AS $$
        SELECT name FROM your_code_history_table WHERE gss = $1::text

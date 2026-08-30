@@ -553,3 +553,18 @@ CREATE FUNCTION description(text)
    LANGUAGE sql IMMUTABLE STRICT AS $$
       SELECT name FROM gsscode_types WHERE gss = upper(left($1, 3))
    $$;
+
+-- Whole-row form of description() -- returns every gsscode_types column
+-- (abbreviation, theme, coverage, status, as well as name) in one call
+-- instead of one hand-written join per field you want.
+CREATE FUNCTION type_info(gsscode)
+   RETURNS gsscode_types
+   LANGUAGE sql IMMUTABLE STRICT AS $$
+      SELECT * FROM gsscode_types WHERE gss = country($1) || to_char(gss_type($1), 'FM00')
+   $$;
+
+CREATE FUNCTION type_info(text)
+   RETURNS gsscode_types
+   LANGUAGE sql IMMUTABLE STRICT AS $$
+      SELECT * FROM gsscode_types WHERE gss = upper(left($1, 3))
+   $$;
