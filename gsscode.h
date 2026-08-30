@@ -28,15 +28,13 @@
 #define SET_BITS(var,pos,len,set) ((var) = ((var) &~ (((1u<<(len))-1)<<pos)) | ((set)<<(pos)))
 
 // A GSS code is 9 characters: <country:1><type:2><area:6>, eg "E01000001".
-// Unlike the postcode extension's outward-code AREA field (which needs a
-// curated lookup table because valid postal area letters are a sparse,
-// non-sequential set), every field here is a straight arithmetic
-// passthrough of the source digits/letter -- there is no lookup table and
-// nothing to keep in sync as ONS adds new country prefixes or type codes.
-// That is deliberate: ONS adds new type codes (and occasionally new
-// country-prefix letters, eg the existing E/W/S/N/J/K/L/M) on an ongoing
-// basis, so the packed format must never hardcode the *set* of valid
-// values, only the *width* of each field.
+// Every field here is a straight arithmetic passthrough of the source
+// digits/letter -- there is no lookup table and nothing to keep in sync
+// as ONS adds new country prefixes or type codes. That is deliberate:
+// ONS adds new type codes (and occasionally new country-prefix letters,
+// eg the existing E/W/S/N/J/K/L/M) on an ongoing basis, so the packed
+// format must never hardcode the *set* of valid values, only the *width*
+// of each field.
 //
 //   country: bits 27-31 (5 bits) -- letter 'A'-'Z' stored as (letter-'A'),
 //            0-25. 5 bits gives room for 32 possible prefix letters;

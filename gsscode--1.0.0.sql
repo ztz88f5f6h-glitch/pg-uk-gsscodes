@@ -311,15 +311,13 @@ CREATE FUNCTION isnan(gsscode)
 -- Private reference table of ONS entity types (what a 3-character
 -- country+type prefix actually means, eg 'E01' -> 'Lower layer Super
 -- Output Areas'), seeded from the ONS Register of Geographic Codes
--- (June 2025 release, geoportal.statistics.gov.uk). This is the type
--- registry, analogous to the postcode extension's own areas[] table --
--- 206 rows, small and stable enough to ship with the extension. It does
--- NOT hold individual area names (eg what "E01000001" itself is called)
--- -- that's a much larger, per-installation dataset (500,000+ rows,
--- changing as boundaries are redrawn) that stays external, the same way
--- postcode itself doesn't ship individual address data and expects a
--- source such as Code-Point Open for that. See update_gsscode_types.py
--- for how to refresh this table from the current ONS release.
+-- (June 2025 release, geoportal.statistics.gov.uk) -- 206 rows, small
+-- and stable enough to ship with the extension. It does NOT hold
+-- individual area names (eg what "E01000001" itself is called) -- that's
+-- a much larger, per-installation dataset (500,000+ rows, changing as
+-- boundaries are redrawn) that stays external rather than being baked
+-- into a general-purpose extension. See update_gsscode_types.py for how
+-- to refresh this table from the current ONS release.
 CREATE TABLE gsscode_types (
    gss           char(3) PRIMARY KEY,
    name          text NOT NULL,

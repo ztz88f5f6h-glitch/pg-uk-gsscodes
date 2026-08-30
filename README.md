@@ -39,8 +39,8 @@ Parsing
 -------
 Text input must be exactly 9 characters: one letter (case-insensitive)
 followed by 8 digits. No partial/fragmentary input, no separators --
-unlike postcodes, GSS codes aren't typed in by hand a character at a
-time.
+GSS codes are generated and consumed programmatically, not typed in by
+hand a character at a time.
 
 
 Comparison and ordering
@@ -55,9 +55,10 @@ Partial matching
 -----------------
 The `%` and `!%` operators match a prefix: a bare country letter ('E'),
 a country+type ('E01'), or a full 9-character code. Any other length
-never matches (not an error) -- this mirrors how the `postcode`
-extension's own `%`/`!%` treat invalid fragments. `%` is registered in
-the type's btree operator family, so it can drive an index scan directly:
+never matches -- rather than raising an error, which would make these
+operators unsafe to use directly against untrusted/user-supplied input.
+`%` is registered in the type's btree operator family, so it can drive
+an index scan directly:
 
     SELECT * FROM areas WHERE gss % 'E01';   -- all English LSOAs
     -- Index Scan using areas_gss_idx ...  Index Cond: (gss % 'E01'::text)
@@ -137,15 +138,14 @@ country+type prefix actually means, eg `description('E01')` ->
 
 The data comes from a private `gsscode_types` table shipped with the
 extension (206 rows: gss, name, abbreviation, theme, coverage, status),
-seeded from the ONS Register of Geographic Codes -- this is the type
-registry, analogous to the `postcode` extension's own `areas[]` table.
-It does NOT hold individual area names (eg what `E01000001` itself is
-called, as opposed to what "E01" as a type means) -- that's a much
-larger, per-installation dataset (500,000+ rows, changing as boundaries
-are redrawn) that stays external, the same way `postcode` doesn't ship
-individual address data and expects a source such as Code-Point Open for
-that. If you have your own copy of the ONS Code History Database, wiring
-up individual-code names is a one-line function:
+seeded from the ONS Register of Geographic Codes -- a small, stable type
+registry that's safe to ship as part of the extension itself. It does
+NOT hold individual area names (eg what `E01000001` itself is called, as
+opposed to what "E01" as a type means) -- that's a much larger,
+per-installation dataset (500,000+ rows, changing as boundaries are
+redrawn) that stays external rather than being baked into a general-
+purpose extension. If you have your own copy of the ONS Code History
+Database, wiring up individual-code names is a one-line function:
 
     CREATE FUNCTION name(gsscode) RETURNS text LANGUAGE sql STABLE AS $$
        SELECT name FROM your_code_history_table WHERE gss = $1::text

@@ -17,8 +17,9 @@ gsscode gsscode_parse (const char *str) {
    if (! str) return 0;
 
    // exactly 9 characters: 1 letter + 8 digits, no separators, no
-   // truncation/partial-match support (unlike postcode -- GSS codes
-   // aren't typed by hand character-by-character the way postcodes are)
+   // truncation/partial-match support -- GSS codes are generated and
+   // consumed programmatically, not typed in by hand a character at a
+   // time, so there's no need to tolerate partial/fragmentary input here
    char c = str[0];
    if (c >= 'a' && c <= 'z') c -= 32; // tr/[a-z]/[A-Z]/
    if (! IS_AZ(c)) return 0;

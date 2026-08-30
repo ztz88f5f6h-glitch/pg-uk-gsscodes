@@ -156,9 +156,8 @@ Datum gsscode_gte (PG_FUNCTION_ARGS) {
 
 // Partial/prefix matching -- eg 'E01' matches any gsscode whose country
 // and type are E/01, regardless of area. Invalid or wrongly-sized
-// prefixes never match anything (mirrors postcode's own %/!% behaviour
-// for invalid fragments) rather than erroring, so these are safe to use
-// in a WHERE clause driven by untrusted/user-supplied input.
+// prefixes never match anything rather than erroring, so these are safe
+// to use in a WHERE clause driven by untrusted/user-supplied input.
 
 PG_FUNCTION_INFO_V1(gsscode_cmp_partial);
 

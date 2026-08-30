@@ -1,7 +1,7 @@
 {
    "name": "gsscode",
    "abstract": "UK ONS/GSS geography code type, packed into 32 bits",
-   "description": "Packs a 9-character UK ONS/GSS statistical geography code (eg E01000001) into a 32-bit integer for fast indexing and prefix matching, on the same principle as the postcode extension. Includes %/!% prefix-match operators (single or array of prefixes), text-compatibility shims (~, ~*, LEFT()) for queries written against the original text column, isnan() for ONS's reserved/placeholder codes, and a private type-registry table (description()) seeded from and refreshable against the ONS Register of Geographic Codes.",
+   "description": "Packs a 9-character UK ONS/GSS statistical geography code (eg E01000001) into a 32-bit integer for fast indexing and prefix matching. Includes %/!% prefix-match operators (single or array of prefixes), text-compatibility shims (~, ~*, LEFT()) for queries written against the original text column, isnan() for ONS's reserved/placeholder codes, and a private type-registry table (description()) seeded from and refreshable against the ONS Register of Geographic Codes.",
    "version": "1.0.0",
    "maintainer": [
       "John Burns <john@impactdatametrics.com>"
@@ -29,7 +29,6 @@
       "ons",
       "geography",
       "uk",
-      "statistics",
-      "postcode"
+      "statistics"
    ]
 }
