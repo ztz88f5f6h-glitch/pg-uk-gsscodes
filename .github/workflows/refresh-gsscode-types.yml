@@ -1,0 +1,36 @@
+name: Refresh gsscode_types.json from ONS
+
+on:
+  schedule:
+    # ONS republishes the Register of Geographic Codes roughly monthly.
+    # 03:00 UTC on the 1st gives plenty of margin either side.
+    - cron: '0 3 1 * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Fetch current ONS release and regenerate data/gsscode_types.json
+        run: python3 scripts/publish_gsscode_types_json.py
+
+      - name: Commit if the data actually changed
+        run: |
+          if git diff --quiet -- data/gsscode_types.json; then
+            echo "no change since last publish"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/gsscode_types.json
+          git commit -m "Refresh gsscode_types.json from the current ONS release"
+          git push

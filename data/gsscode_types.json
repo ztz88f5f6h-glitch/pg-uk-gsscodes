@@ -1,0 +1,1650 @@
+[
+  {
+    "abbreviation": "OA",
+    "coverage": "England",
+    "gss": "E00",
+    "name": "Output Areas",
+    "status": "Current",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "LSOA",
+    "coverage": "England",
+    "gss": "E01",
+    "name": "Lower layer Super Output Areas",
+    "status": "Current",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "MSOA",
+    "coverage": "England",
+    "gss": "E02",
+    "name": "Middle layer Super Output Areas",
+    "status": "Current",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "PAR",
+    "coverage": "England",
+    "gss": "E04",
+    "name": "Civil Parishes",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "WD",
+    "coverage": "England",
+    "gss": "E05",
+    "name": "Electoral Wards/Divisions",
+    "status": "Current",
+    "theme": "Administrative/Electoral"
+  },
+  {
+    "abbreviation": "UA",
+    "coverage": "England",
+    "gss": "E06",
+    "name": "Unitary Authorities",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "NMD",
+    "coverage": "England",
+    "gss": "E07",
+    "name": "Non-metropolitan Districts",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "MD",
+    "coverage": "England",
+    "gss": "E08",
+    "name": "Metropolitan Districts",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "LONB",
+    "coverage": "England",
+    "gss": "E09",
+    "name": "London Boroughs",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "CTY",
+    "coverage": "England",
+    "gss": "E10",
+    "name": "Counties",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "MCTY",
+    "coverage": "England",
+    "gss": "E11",
+    "name": "Metropolitan Counties",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "RGN",
+    "coverage": "England",
+    "gss": "E12",
+    "name": "Regions",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "IOL",
+    "coverage": "England",
+    "gss": "E13",
+    "name": "Inner and Outer London",
+    "status": "Current",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "PCON",
+    "coverage": "England",
+    "gss": "E14",
+    "name": "Westminster Parliamentary Constituencies",
+    "status": "Current",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "EER",
+    "coverage": "England",
+    "gss": "E15",
+    "name": "European Electoral Regions",
+    "status": "Archived",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "PCT",
+    "coverage": "England",
+    "gss": "E16",
+    "name": "Primary Care Trusts",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CT",
+    "coverage": "England",
+    "gss": "E17",
+    "name": "Care Trusts",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "SHA",
+    "coverage": "England",
+    "gss": "E18",
+    "name": "Strategic Health Authorities",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "PSHA",
+    "coverage": "England",
+    "gss": "E19",
+    "name": "Pan Strategic Health Authorities",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CANREG",
+    "coverage": "England",
+    "gss": "E20",
+    "name": "Cancer Registries",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CANNET",
+    "coverage": "England",
+    "gss": "E21",
+    "name": "Cancer Networks",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CSP",
+    "coverage": "England",
+    "gss": "E22",
+    "name": "Community Safety Partnerships",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "PFA",
+    "coverage": "England",
+    "gss": "E23",
+    "name": "Police Force Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "LLSC",
+    "coverage": "England",
+    "gss": "E24",
+    "name": "Local Learning and Skills Council areas",
+    "status": "Archived",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "PUA",
+    "coverage": "England",
+    "gss": "E25",
+    "name": "Primary Urban Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "NPARK",
+    "coverage": "England",
+    "gss": "E26",
+    "name": "National Parks",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "NDC",
+    "coverage": "England",
+    "gss": "E27",
+    "name": "New Deal for Communities",
+    "status": "Archived",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "REGD",
+    "coverage": "England",
+    "gss": "E28",
+    "name": "Registration Districts",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "REGSD",
+    "coverage": "England",
+    "gss": "E29",
+    "name": "Registration Sub-district",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "TTWA",
+    "coverage": "England",
+    "gss": "E30",
+    "name": "Travel to Work Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "FRA",
+    "coverage": "England",
+    "gss": "E31",
+    "name": "Fire and Rescue Authorities",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "LAC",
+    "coverage": "England",
+    "gss": "E32",
+    "name": "London Assembly Constituencies",
+    "status": "Current",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "WZ",
+    "coverage": "England",
+    "gss": "E33",
+    "name": "Workplace Zones",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "BUA",
+    "coverage": "England",
+    "gss": "E34",
+    "name": "Built Up Areas (2011 Version)",
+    "status": "Archived",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "BUASD",
+    "coverage": "England",
+    "gss": "E35",
+    "name": "Built Up Area sub-divisions (2011 Version)",
+    "status": "Archived",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "CMWD",
+    "coverage": "England",
+    "gss": "E36",
+    "name": "Census Merged Wards",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "LEP",
+    "coverage": "England",
+    "gss": "E37",
+    "name": "Local Enterprise Partnerships",
+    "status": "Archived",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SICBL",
+    "coverage": "England",
+    "gss": "E38",
+    "name": "Sub Integrated Care Board Locations",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "NHSRLO",
+    "coverage": "England",
+    "gss": "E39",
+    "name": "NHS England (Region, Local Office)",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "NHSER",
+    "coverage": "England",
+    "gss": "E40",
+    "name": "NHS England Regions",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CMLAD",
+    "coverage": "England",
+    "gss": "E41",
+    "name": "Census Merged Local Authority Districts",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "CMCTY",
+    "coverage": "England",
+    "gss": "E42",
+    "name": "Census Merged Counties",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "NCP",
+    "coverage": "England",
+    "gss": "E43",
+    "name": "Non-Civil Parished Areas",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "PHEC",
+    "coverage": "England",
+    "gss": "E45",
+    "name": "Public Health England Centres",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "PHEREG",
+    "coverage": "England",
+    "gss": "E46",
+    "name": "Public Health England Regions",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CAUTH",
+    "coverage": "England",
+    "gss": "E47",
+    "name": "Combined Authorities",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "LRF",
+    "coverage": "England",
+    "gss": "E48",
+    "name": "Local Resilience Forums",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "EZ",
+    "coverage": "England",
+    "gss": "E49",
+    "name": "Enterprise Zones",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "WA",
+    "coverage": "England",
+    "gss": "E50",
+    "name": "Waste Authorities",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "DC",
+    "coverage": "England",
+    "gss": "E51",
+    "name": "Development Corporations",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "LEPOP",
+    "coverage": "England",
+    "gss": "E52",
+    "name": "LEP - overlapping part",
+    "status": "Archived",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "LEPNOP",
+    "coverage": "England",
+    "gss": "E53",
+    "name": "LEP - non overlapping part",
+    "status": "Archived",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "ICB",
+    "coverage": "England",
+    "gss": "E54",
+    "name": "Integrated Care Boards",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "SCN",
+    "coverage": "England",
+    "gss": "E55",
+    "name": "Strategic Clinical Networks",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CAL",
+    "coverage": "England",
+    "gss": "E56",
+    "name": "Cancer Alliances",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "NCV",
+    "coverage": "England",
+    "gss": "E57",
+    "name": "National Cancer Vanguards",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CED",
+    "coverage": "England",
+    "gss": "E58",
+    "name": "County Electoral Divisions",
+    "status": "Current",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "ICS",
+    "coverage": "England",
+    "gss": "E59",
+    "name": "Integrated Care Systems",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "LPA",
+    "coverage": "England",
+    "gss": "E60",
+    "name": "Local Planning Authorities",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "GLA",
+    "coverage": "England",
+    "gss": "E61",
+    "name": "Greater London Authority",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "NL",
+    "coverage": "England",
+    "gss": "E62",
+    "name": "National Landscapes (formerly AONB)",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "BUA",
+    "coverage": "England",
+    "gss": "E63",
+    "name": "Built Up Areas",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "NonNPARK",
+    "coverage": "England",
+    "gss": "E65",
+    "name": "England Non-National Park Area",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "GLAD",
+    "coverage": "England",
+    "gss": "E66",
+    "name": "Grouped Local Authority Districts (Parishes)",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "CMLAD21",
+    "coverage": "England",
+    "gss": "E67",
+    "name": "Census Merged Local Authority Districts 2021",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "GLTLA",
+    "coverage": "England",
+    "gss": "E68",
+    "name": "Grouped Lower Tier Local Authorities 2022",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "LSIPA",
+    "coverage": "England",
+    "gss": "E69",
+    "name": "Local Skills Improvement Plan areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "CTRY",
+    "coverage": "England",
+    "gss": "E92",
+    "name": "Country",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "TCITY",
+    "coverage": "England and Wales",
+    "gss": "J01",
+    "name": "Major Towns and Cities",
+    "status": "Current",
+    "theme": "Experimental"
+  },
+  {
+    "abbreviation": "PAR",
+    "coverage": "England and Wales",
+    "gss": "J02",
+    "name": "1961 Census Parishes",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "WD",
+    "coverage": "England and Wales",
+    "gss": "J03",
+    "name": "1961 Census Wards",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "LAD",
+    "coverage": "England and Wales",
+    "gss": "J04",
+    "name": "1961 Census Districts",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "CTY",
+    "coverage": "England and Wales",
+    "gss": "J05",
+    "name": "1961 Census Counties",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "CIS",
+    "coverage": "United Kingdom",
+    "gss": "J06",
+    "name": "Covid Infection Survey",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "TTWA",
+    "coverage": "United Kingdom",
+    "gss": "K01",
+    "name": "Travel to Work Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "UK",
+    "coverage": "United Kingdom",
+    "gss": "K02",
+    "name": "United Kingdom",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "GB",
+    "coverage": "Great Britain",
+    "gss": "K03",
+    "name": "Great Britain",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "E&W",
+    "coverage": "England and Wales",
+    "gss": "K04",
+    "name": "England and Wales",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "BUA",
+    "coverage": "England and Wales",
+    "gss": "K05",
+    "name": "Built Up Areas (2011 Version)",
+    "status": "Archived",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "BUASD",
+    "coverage": "England and Wales",
+    "gss": "K06",
+    "name": "Built Up Area sub divisions (2011 Version)",
+    "status": "Archived",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "NL",
+    "coverage": "England and Wales",
+    "gss": "K07",
+    "name": "National Landscapes (formerly AONB)",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "BUA",
+    "coverage": "England and Wales",
+    "gss": "K08",
+    "name": "Built Up Areas",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "NSGC",
+    "coverage": "United Kingdom",
+    "gss": "K99",
+    "name": "Non-Standard Geography Categories",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SHA",
+    "coverage": "Channel Islands",
+    "gss": "L00",
+    "name": "Strategic Health Authorities",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "BCD",
+    "coverage": "Channel Islands",
+    "gss": "L93",
+    "name": "British Crown Dependencies",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "SHA",
+    "coverage": "Isle of Man",
+    "gss": "M00",
+    "name": "Strategic Health Authorities",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "PHD",
+    "coverage": "Isle of Man",
+    "gss": "M01",
+    "name": "Primary Healthcare Directorate",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "BCD",
+    "coverage": "Isle of Man",
+    "gss": "M83",
+    "name": "British Crown Dependency",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "SA",
+    "coverage": "Northern Ireland",
+    "gss": "N00",
+    "name": "Small Areas",
+    "status": "Archived",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "PCON",
+    "coverage": "Northern Ireland",
+    "gss": "N05",
+    "name": "Westminster Parliamentary Constituencies",
+    "status": "Current",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "PCON",
+    "coverage": "Northern Ireland",
+    "gss": "N06",
+    "name": "Westminster Parliamentary Constituencies",
+    "status": "Archived",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "EER",
+    "coverage": "Northern Ireland",
+    "gss": "N07",
+    "name": "European Electoral Regions",
+    "status": "Archived",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "WD",
+    "coverage": "Northern Ireland",
+    "gss": "N08",
+    "name": "Electoral Wards",
+    "status": "Current",
+    "theme": "Administrative/Electoral"
+  },
+  {
+    "abbreviation": "LGD",
+    "coverage": "Northern Ireland",
+    "gss": "N09",
+    "name": "Local Government Districts",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "DEA",
+    "coverage": "Northern Ireland",
+    "gss": "N10",
+    "name": "District Electoral Areas",
+    "status": "Current",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "SETT2015",
+    "coverage": "Northern Ireland",
+    "gss": "N11",
+    "name": "Settlement 2015",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "TTWA",
+    "coverage": "Northern Ireland",
+    "gss": "N12",
+    "name": "Travel to Work Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "LPA",
+    "coverage": "Northern Ireland",
+    "gss": "N13",
+    "name": "Local Planning Authorities",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "WZ",
+    "coverage": "Northern Ireland",
+    "gss": "N19",
+    "name": "Workplace Zones",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "DZ",
+    "coverage": "Northern Ireland",
+    "gss": "N20",
+    "name": "Data Zones",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "SDZ",
+    "coverage": "Northern Ireland",
+    "gss": "N21",
+    "name": "Super Data Zones",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "PFA",
+    "coverage": "Northern Ireland",
+    "gss": "N23",
+    "name": "Police Force Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "PFD",
+    "coverage": "Northern Ireland",
+    "gss": "N24",
+    "name": "Police Force Districts",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "NIFRS",
+    "coverage": "Northern Ireland",
+    "gss": "N31",
+    "name": "Northern Ireland Fire and Rescue Service",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "NIFRSA",
+    "coverage": "Northern Ireland",
+    "gss": "N32",
+    "name": "Northern Ireland Fire and Rescue Service Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "NIFRSD",
+    "coverage": "Northern Ireland",
+    "gss": "N33",
+    "name": "Northern Ireland Fire and Rescue Service Districts",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "CREG",
+    "coverage": "Northern Ireland",
+    "gss": "N34",
+    "name": "City Regions",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "CTRY",
+    "coverage": "Northern Ireland",
+    "gss": "N92",
+    "name": "Country",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "OA",
+    "coverage": "Scotland",
+    "gss": "S00",
+    "name": "Output Areas",
+    "status": "Current",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "DZ",
+    "coverage": "Scotland",
+    "gss": "S01",
+    "name": "Data Zones",
+    "status": "Current",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "IZ",
+    "coverage": "Scotland",
+    "gss": "S02",
+    "name": "Intermediate Zones",
+    "status": "Current",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "CHP",
+    "coverage": "Scotland",
+    "gss": "S03",
+    "name": "Community Health Partnerships",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "ROAS",
+    "coverage": "Scotland",
+    "gss": "S04",
+    "name": "Regeneration Outcome Agreement Areas - Scotland",
+    "status": "Current",
+    "theme": "Housing and Regeneration"
+  },
+  {
+    "abbreviation": "ROAC",
+    "coverage": "Scotland",
+    "gss": "S05",
+    "name": "Regeneration Outcome Areas - Community Planning Partnerships",
+    "status": "Current",
+    "theme": "Housing and Regeneration"
+  },
+  {
+    "abbreviation": "ROAL",
+    "coverage": "Scotland",
+    "gss": "S06",
+    "name": "Regeneration Outcome Areas - Local Areas",
+    "status": "Current",
+    "theme": "Housing and Regeneration"
+  },
+  {
+    "abbreviation": "RTP",
+    "coverage": "Scotland",
+    "gss": "S07",
+    "name": "Regional Transport Partnerships",
+    "status": "Current",
+    "theme": "Transport"
+  },
+  {
+    "abbreviation": "HB",
+    "coverage": "Scotland",
+    "gss": "S08",
+    "name": "Health Board areas",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "ER",
+    "coverage": "Scotland",
+    "gss": "S09",
+    "name": "Enterprise Regions",
+    "status": "Current",
+    "theme": "Economic"
+  },
+  {
+    "abbreviation": "URC",
+    "coverage": "Scotland",
+    "gss": "S10",
+    "name": "Urban Regeneration Companies",
+    "status": "Current",
+    "theme": "Economic"
+  },
+  {
+    "abbreviation": "SDPA",
+    "coverage": "Scotland",
+    "gss": "S11",
+    "name": "Strategic Development Plan Areas",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "CA",
+    "coverage": "Scotland",
+    "gss": "S12",
+    "name": "Council Areas",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "WD",
+    "coverage": "Scotland",
+    "gss": "S13",
+    "name": "Electoral Wards",
+    "status": "Current",
+    "theme": "Administrative/Electoral"
+  },
+  {
+    "abbreviation": "PCON",
+    "coverage": "Scotland",
+    "gss": "S14",
+    "name": "Westminster Parliamentary Constituencies",
+    "status": "Current",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "EER",
+    "coverage": "Scotland",
+    "gss": "S15",
+    "name": "European Electoral Regions",
+    "status": "Archived",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "SPC",
+    "coverage": "Scotland",
+    "gss": "S16",
+    "name": "Scottish Parliamentary Constituencies",
+    "status": "Current",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "SPR",
+    "coverage": "Scotland",
+    "gss": "S17",
+    "name": "Scottish Parliamentary Regions",
+    "status": "Current",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "LOCS",
+    "coverage": "Scotland",
+    "gss": "S19",
+    "name": "Localities",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SETT",
+    "coverage": "Scotland",
+    "gss": "S20",
+    "name": "Settlements",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "NPARK",
+    "coverage": "Scotland",
+    "gss": "S21",
+    "name": "National Parks",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "TTWA",
+    "coverage": "Scotland",
+    "gss": "S22",
+    "name": "Travel to Work Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "PFA",
+    "coverage": "Scotland",
+    "gss": "S23",
+    "name": "Police Force Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "HIE",
+    "coverage": "Scotland",
+    "gss": "S24",
+    "name": "Highlands and Islands Enterprise",
+    "status": "Current",
+    "theme": "Economic"
+  },
+  {
+    "abbreviation": "CJA",
+    "coverage": "Scotland",
+    "gss": "S25",
+    "name": "Community Justice Authorities",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "CHCP",
+    "coverage": "Scotland",
+    "gss": "S26",
+    "name": "Community Health Partnerships sub-areas",
+    "status": "Archived",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "ISDT",
+    "coverage": "Scotland",
+    "gss": "S27",
+    "name": "ISD Health Board of Treatment",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CDC",
+    "coverage": "Scotland",
+    "gss": "S28",
+    "name": "Census Detailed Characteristics",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "CLC",
+    "coverage": "Scotland",
+    "gss": "S29",
+    "name": "Census Local Characteristics",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "LAU1",
+    "coverage": "Scotland",
+    "gss": "S30",
+    "name": "Local Administrative Units 1",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "LAU2",
+    "coverage": "Scotland",
+    "gss": "S31",
+    "name": "Local Administrative Units 2",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "SPD",
+    "coverage": "Scotland",
+    "gss": "S32",
+    "name": "Scottish Police Divisions",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "BRMA",
+    "coverage": "Scotland",
+    "gss": "S33",
+    "name": "Broad Rental Market Areas",
+    "status": "Current",
+    "theme": "Housing and Regeneration"
+  },
+  {
+    "abbreviation": "WZ",
+    "coverage": "Scotland",
+    "gss": "S34",
+    "name": "Workplace Zones",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "CVP",
+    "coverage": "Scotland",
+    "gss": "S35",
+    "name": "Civil Parish",
+    "status": "Archived",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "ISLG",
+    "coverage": "Scotland",
+    "gss": "S36",
+    "name": "Island Groups",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "HIA",
+    "coverage": "Scotland",
+    "gss": "S37",
+    "name": "Integration Authorities",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "SFRS",
+    "coverage": "Scotland",
+    "gss": "S38",
+    "name": "Scottish Fire and Rescue Service",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SFRLSO",
+    "coverage": "Scotland",
+    "gss": "S39",
+    "name": "Scottish Fire and Rescue Local Senior Officer Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SFRSDA",
+    "coverage": "Scotland",
+    "gss": "S40",
+    "name": "Scottish Fire and Rescue Service Delivery Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SMR",
+    "coverage": "Scotland",
+    "gss": "S41",
+    "name": "Scottish Marine Regions",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SLRP",
+    "coverage": "Scotland",
+    "gss": "S42",
+    "name": "Scottish Local Resilience Partnerships",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SRRP",
+    "coverage": "Scotland",
+    "gss": "S43",
+    "name": "Scottish Regional Resilience Partnerships",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "LPA",
+    "coverage": "Scotland",
+    "gss": "S44",
+    "name": "Local Planning Authorities",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "BUA",
+    "coverage": "Scotland",
+    "gss": "S45",
+    "name": "Built Up Areas",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "NSGC",
+    "coverage": "Scotland",
+    "gss": "S47",
+    "name": "Non-Standard Geography Categories",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SIR",
+    "coverage": "Scotland",
+    "gss": "S48",
+    "name": "Scotttish Island Regions",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "CLOC",
+    "coverage": "Scotland",
+    "gss": "S52",
+    "name": "Census Locality",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "CSETT",
+    "coverage": "Scotland",
+    "gss": "S53",
+    "name": "Census Settlement",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "CTRY",
+    "coverage": "Scotland",
+    "gss": "S92",
+    "name": "Country",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "OA",
+    "coverage": "Wales",
+    "gss": "W00",
+    "name": "Output Areas",
+    "status": "Current",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "LSOA",
+    "coverage": "Wales",
+    "gss": "W01",
+    "name": "Lower layer Super Output Areas",
+    "status": "Current",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "MSOA",
+    "coverage": "Wales",
+    "gss": "W02",
+    "name": "Middle layer Super Output Areas",
+    "status": "Current",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "USOA",
+    "coverage": "Wales",
+    "gss": "W03",
+    "name": "Upper layer Super Output Areas",
+    "status": "Archived",
+    "theme": "Statistical Building Block"
+  },
+  {
+    "abbreviation": "COM",
+    "coverage": "Wales",
+    "gss": "W04",
+    "name": "Communities",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "WD",
+    "coverage": "Wales",
+    "gss": "W05",
+    "name": "Electoral Wards",
+    "status": "Current",
+    "theme": "Administrative/Electoral"
+  },
+  {
+    "abbreviation": "UA",
+    "coverage": "Wales",
+    "gss": "W06",
+    "name": "Unitary Authorities",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "PCON",
+    "coverage": "Wales",
+    "gss": "W07",
+    "name": "Westminster Parliamentary Constituencies",
+    "status": "Current",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "EER",
+    "coverage": "Wales",
+    "gss": "W08",
+    "name": "European Electoral Regions",
+    "status": "Archived",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "SENC",
+    "coverage": "Wales",
+    "gss": "W09",
+    "name": "The Senedd Constituencies",
+    "status": "Current",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "SENER",
+    "coverage": "Wales",
+    "gss": "W10",
+    "name": "The Senedd Electoral Regions",
+    "status": "Archived",
+    "theme": "Electoral"
+  },
+  {
+    "abbreviation": "LHB",
+    "coverage": "Wales",
+    "gss": "W11",
+    "name": "Local Health Boards",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CANREG",
+    "coverage": "Wales",
+    "gss": "W12",
+    "name": "Cancer Registries",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CANNET",
+    "coverage": "Wales",
+    "gss": "W13",
+    "name": "Cancer Networks",
+    "status": "Current",
+    "theme": "Health"
+  },
+  {
+    "abbreviation": "CSP",
+    "coverage": "Wales",
+    "gss": "W14",
+    "name": "Community Safety Partnerships",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "PFA",
+    "coverage": "Wales",
+    "gss": "W15",
+    "name": "Police Force Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "DCELLS",
+    "coverage": "Wales",
+    "gss": "W16",
+    "name": "Department for Children, Education, Lifelong Learning and Skills, WG",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "NPARK",
+    "coverage": "Wales",
+    "gss": "W18",
+    "name": "National Parks",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SCER",
+    "coverage": "Wales",
+    "gss": "W19",
+    "name": "Senedd Cymru Economic Regions",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "REGD",
+    "coverage": "Wales",
+    "gss": "W20",
+    "name": "Registration Districts",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "REGSD",
+    "coverage": "Wales",
+    "gss": "W21",
+    "name": "Registration Sub-district",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "TTWA",
+    "coverage": "Wales",
+    "gss": "W22",
+    "name": "Travel to Work Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SPA",
+    "coverage": "Wales",
+    "gss": "W23",
+    "name": "Spatial Plan Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SPSA",
+    "coverage": "Wales",
+    "gss": "W24",
+    "name": "Spatial Plan Sub-areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "FRA",
+    "coverage": "Wales",
+    "gss": "W25",
+    "name": "Fire and Rescue Authorities",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SRA",
+    "coverage": "Wales",
+    "gss": "W26",
+    "name": "Strategic Regeneration Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "SRASub",
+    "coverage": "Wales",
+    "gss": "W27",
+    "name": "Strategic Regeneration Sub-areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "TCA",
+    "coverage": "Wales",
+    "gss": "W28",
+    "name": "Transport Consortia Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "AgricReg",
+    "coverage": "Wales",
+    "gss": "W29",
+    "name": "Agricultural Regions",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "AgricSmall",
+    "coverage": "Wales",
+    "gss": "W30",
+    "name": "Agricultural Small Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "NonNPARK",
+    "coverage": "Wales",
+    "gss": "W31",
+    "name": "Wales Non-National Park Area",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "NonSRA",
+    "coverage": "Wales",
+    "gss": "W32",
+    "name": "Non-Strategic Regeneration Area",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "CFA",
+    "coverage": "Wales",
+    "gss": "W33",
+    "name": "Communities First Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "NonCFA",
+    "coverage": "Wales",
+    "gss": "W34",
+    "name": "Non-Communities First Areas",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "WZ",
+    "coverage": "Wales",
+    "gss": "W35",
+    "name": "Workplace Zones",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "PSCReg",
+    "coverage": "Wales",
+    "gss": "W36",
+    "name": "Footprint Regions for Public Service Collaboration",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "BUA",
+    "coverage": "Wales",
+    "gss": "W37",
+    "name": "Built Up Areas (2011 Version)",
+    "status": "Archived",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "BUASD",
+    "coverage": "Wales",
+    "gss": "W38",
+    "name": "Built Up Area sub-divisions (2011 Version)",
+    "status": "Archived",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "CMWD",
+    "coverage": "Wales",
+    "gss": "W39",
+    "name": "Census Merged Wards",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "CMLAD",
+    "coverage": "Wales",
+    "gss": "W40",
+    "name": "Census Merged Local Authority Districts",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "LRF",
+    "coverage": "Wales",
+    "gss": "W41",
+    "name": "Local Resilience Forums",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "CREG",
+    "coverage": "Wales",
+    "gss": "W42",
+    "name": "City Regions",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "LPA",
+    "coverage": "Wales",
+    "gss": "W43",
+    "name": "Local Planning Authorities",
+    "status": "Current",
+    "theme": "Administrative"
+  },
+  {
+    "abbreviation": "NL",
+    "coverage": "Wales",
+    "gss": "W44",
+    "name": "National Landscapes (formerly AONB)",
+    "status": "Current",
+    "theme": "Other"
+  },
+  {
+    "abbreviation": "BUA",
+    "coverage": "Wales",
+    "gss": "W45",
+    "name": "Built Up Areas",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "GLAD",
+    "coverage": "Wales",
+    "gss": "W46",
+    "name": "Grouped Local Authority Districts (Parishes)",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "GLTLA",
+    "coverage": "Wales",
+    "gss": "W47",
+    "name": "Grouped Lower Tier Local Authorities 2022",
+    "status": "Current",
+    "theme": "Census"
+  },
+  {
+    "abbreviation": "CTRY",
+    "coverage": "Wales",
+    "gss": "W92",
+    "name": "Country",
+    "status": "Current",
+    "theme": "Administrative"
+  }
+]

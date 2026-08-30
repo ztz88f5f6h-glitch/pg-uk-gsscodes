@@ -1,91 +1,66 @@
 -- Optional in-database refresh of gsscode_types, for installations that
--- accept the untrusted-language trust cost and want a single SQL call
--- instead of running update_gsscode_types.py externally. This is a
--- SEPARATE extension precisely so the core gsscode extension stays
--- dependency-free -- most users should never need to enable
--- plpython3u just to get the packed type and its %/!% operators.
+-- want a single SQL call instead of running update_gsscode_types.py
+-- externally. This is a SEPARATE extension precisely so the core
+-- gsscode extension stays dependency-free -- most users should never
+-- need to enable anything extra just to get the packed type and its
+-- %/!% operators.
 --
--- This function reuses the exact same logic as update_gsscode_types.py
--- (same ArcGIS search query, same "/Categories/LATEST" tag lookup, same
--- CSV parsing, same upsert), just embedded as one PL/Python3u function
--- body instead of an external script. See that script's docstring for
--- why the search is done this way rather than a hardcoded item id/URL.
+-- ONS only publishes the Register of Geographic Codes as a ZIP (no
+-- bare-CSV endpoint, no queryable feature-service -- confirmed), and
+-- PostgreSQL has no trusted, built-in way to decompress one. Rather than
+-- reaching for an untrusted language (plpython3u) to do that
+-- decompression inside the database, the decompression happens outside
+-- it: scripts/publish_gsscode_types_json.py runs in this repo's GitHub
+-- Actions CI (roughly monthly, matching ONS's own release cadence),
+-- fetches and unzips the current ONS release the same way
+-- update_gsscode_types.py does, and commits the parsed result as
+-- data/gsscode_types.json. This function then only ever needs to do a
+-- plain HTTP GET of that JSON file plus jsonb_populate_recordset() --
+-- both fully within PostgreSQL's trusted core via the `http` extension,
+-- which (unlike plpython3u) can only make HTTP requests, nothing more.
+-- `http` still needs superuser to enable, same as any non-default
+-- extension, but it's a much narrower thing to trust than a general-
+-- purpose scripting language.
 --
--- Requires the Postgres server process itself to have outbound internet
--- access to arcgis.com -- many production database hosts deliberately
--- firewall that off, in which case this will simply time out; the
--- external script has no such requirement since it can run from
--- wherever you have egress.
+-- This does mean trusting this repo's own GitHub Actions pipeline and
+-- write access to it, in addition to ONS -- a real, if narrow, new
+-- dependency worth being aware of, not just a strict improvement.
 CREATE FUNCTION update_gsscode_types()
    RETURNS integer
-   LANGUAGE plpython3u
+   LANGUAGE plpgsql
    AS $$
-import csv
-import io
-import json
-import urllib.parse
-import urllib.request
-import zipfile
+DECLARE
+   resp http_response;
+   payload jsonb;
+   n integer;
+BEGIN
+   resp := http_get('https://raw.githubusercontent.com/ztz88f5f6h-glitch/pg-uk-gsscodes/main/data/gsscode_types.json');
 
-search_url = "https://www.arcgis.com/sharing/rest/search?" + urllib.parse.urlencode({
-    "q": 'tags:PRD_RGC AND categories:"/Categories/LATEST"',
-    "f": "json",
-})
-with urllib.request.urlopen(search_url, timeout=30) as resp:
-    data = json.load(resp)
-results = data.get("results", [])
-if len(results) != 1:
-    plpy.error(
-        "expected exactly one RGC item tagged /Categories/LATEST, got %d "
-        "-- ONS's tagging scheme may have changed, check search results manually"
-        % len(results)
-    )
-item_id = results[0]["id"]
+   IF resp.status <> 200 THEN
+      RAISE EXCEPTION 'fetching gsscode_types.json failed: HTTP %', resp.status;
+   END IF;
 
-data_url = "https://www.arcgis.com/sharing/rest/content/items/%s/data" % item_id
-with urllib.request.urlopen(data_url, timeout=120) as resp:
-    blob = resp.read()
+   payload := resp.content::jsonb;
 
-zf = zipfile.ZipFile(io.BytesIO(blob))
-csv_names = [n for n in zf.namelist() if n.lower().endswith(".csv")]
-if len(csv_names) != 1:
-    plpy.error(
-        "expected exactly one CSV in the RGC release zip, found %r "
-        "-- ONS's release packaging may have changed" % csv_names
-    )
-csv_text = zf.read(csv_names[0]).decode("utf-8-sig")
+   WITH incoming AS (
+      SELECT * FROM jsonb_populate_recordset(NULL::gsscode_types, payload)
+   ),
+   upserted AS (
+      INSERT INTO gsscode_types (gss, name, abbreviation, theme, coverage, status)
+      SELECT gss, name, abbreviation, theme, coverage, status FROM incoming
+      ON CONFLICT (gss) DO UPDATE SET
+         name         = EXCLUDED.name,
+         abbreviation = EXCLUDED.abbreviation,
+         theme        = EXCLUDED.theme,
+         coverage     = EXCLUDED.coverage,
+         status       = EXCLUDED.status
+      RETURNING 1
+   )
+   SELECT count(*) INTO n FROM upserted;
 
-reader = csv.DictReader(io.StringIO(csv_text))
-rows = []
-for r in reader:
-    gss = (r.get("Entity code") or "").strip()
-    if not gss:
-        continue
-    rows.append((
-        gss,
-        (r.get("Entity name") or "").strip(),
-        (r.get("Entity abbreviation") or "").strip() or None,
-        (r.get("Entity theme") or "").strip() or None,
-        (r.get("Entity coverage") or "").strip() or None,
-        (r.get("Status") or "").strip() or None,
-    ))
-
-plan = plpy.prepare("""
-    INSERT INTO gsscode_types (gss, name, abbreviation, theme, coverage, status)
-    VALUES ($1, $2, $3, $4, $5, $6)
-    ON CONFLICT (gss) DO UPDATE SET
-        name = EXCLUDED.name,
-        abbreviation = EXCLUDED.abbreviation,
-        theme = EXCLUDED.theme,
-        coverage = EXCLUDED.coverage,
-        status = EXCLUDED.status
-""", ["text", "text", "text", "text", "text", "text"])
-
-for row in rows:
-    plpy.execute(plan, list(row))
-
-return len(rows)
+   RETURN n;
+END;
 $$;
 
 COMMENT ON FUNCTION update_gsscode_types() IS
-   'Refreshes gsscode_types from the current ONS Register of Geographic Codes release. Returns the number of rows upserted. Requires the database server to have outbound internet access.';
+   'Refreshes gsscode_types from data/gsscode_types.json in the gsscode GitHub repo, which is itself refreshed from ONS by CI. Returns the number of rows upserted. Requires the database server to have outbound internet access to raw.githubusercontent.com.';

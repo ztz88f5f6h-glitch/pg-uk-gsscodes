@@ -1,5 +1,5 @@
 # gsscode_ons_refresh
-comment = 'Optional in-database refresh of gsscode_types from the ONS Register of Geographic Codes (requires plpython3u)'
+comment = 'Optional in-database refresh of gsscode_types from the ONS Register of Geographic Codes (requires the http extension)'
 default_version = '1.0.0'
 relocatable = true
-requires = 'gsscode, plpython3u'
+requires = 'gsscode, http'
