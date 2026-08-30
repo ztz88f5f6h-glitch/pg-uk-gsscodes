@@ -1,5 +1,5 @@
 # gsscode
 comment = 'UK ONS/GSS geography code type, packed into 32 bits'
-default_version = '1.0.0'
+default_version = '1.1.0'
 module_pathname = '$libdir/gsscode'
 relocatable = true

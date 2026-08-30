@@ -1,8 +1,8 @@
 {
    "name": "gsscode",
    "abstract": "UK ONS/GSS geography code type, packed into 32 bits",
-   "description": "Packs a 9-character UK ONS/GSS statistical geography code (eg E01000001) into a 32-bit integer for fast indexing and prefix matching. Includes %/!% prefix-match operators (single or array of prefixes), text-compatibility shims (~, ~*, LEFT()) for queries written against the original text column, isnan() for ONS's reserved/placeholder codes, and a private type-registry table (description()) seeded from and refreshable against the ONS Register of Geographic Codes.",
-   "version": "1.0.0",
+   "description": "Packs a 9-character UK ONS/GSS statistical geography code (eg E01000001) into a 32-bit integer for fast indexing and prefix matching. Includes %/!% prefix-match operators (single or array of prefixes), sound index-assisted prefix search via range_lower()/range_upper(), text-compatibility shims (~, ~*, LEFT()) for queries written against the original text column, isnan() for ONS's reserved/placeholder codes, and a private type-registry table (description()) seeded from and refreshable against the ONS Register of Geographic Codes.",
+   "version": "1.1.0",
    "maintainer": [
       "John Burns <john@impactdatametrics.com>"
    ],
@@ -10,11 +10,11 @@
    "provides": {
       "gsscode": {
          "abstract": "UK ONS/GSS geography code type, packed into 32 bits",
-         "file": "gsscode--1.0.0.sql",
-         "version": "1.0.0"
+         "file": "gsscode--1.1.0.sql",
+         "version": "1.1.0"
       },
       "gsscode_ons_refresh": {
-         "abstract": "Optional in-database refresh of gsscode_types via plpython3u",
+         "abstract": "Optional in-database refresh of gsscode_types via the http extension",
          "file": "gsscode_ons_refresh--1.0.0.sql",
          "version": "1.0.0"
       }

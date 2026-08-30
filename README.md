@@ -1,7 +1,37 @@
-gsscode 1.0
+gsscode 1.1
 ===========
 UK ONS/GSS geography code encoded in 32 bits and optimised for indexing
 and prefix matches.
+
+
+Fixed in 1.1.0
+--------------
+1.0.0 registered `%` under btree strategy 3 (the "equality" slot) to get
+an index-assisted plan for prefix matches. That was a correctness bug,
+not just an unusual choice: PostgreSQL requires strategy 3's operator to
+be a genuine equivalence relation -- reflexive, symmetric, transitive --
+for the planner's equivalence-class reasoning (join elimination,
+`EquivalenceClass` merging) to stay sound. `%` isn't one: `a % 'SW1'`
+and `b % 'SW1'` can both hold with `a <> b`, since many different codes
+share a prefix. It never surfaced in 1.0.0's own tests because those
+never exercised a plan shape that exploits equivalence-class deduction,
+but the planner was entitled to assume a soundness property `%` didn't
+actually have -- a self-join or similar plan on a `%`-filtered column
+could in principle have produced silently wrong rows, not just a
+sequential scan.
+
+1.1.0 drops that opfamily registration entirely. `%`/`!%` are unchanged
+otherwise -- still correct, ordinary boolean filters -- but are no
+longer index-accelerated on their own. `range_lower()`/`range_upper()`
+are the sound replacement, expressing a prefix as a genuine half-open
+range usable with the ordinary (and ordinarily correct) `<`/`>=`
+strategies. See "Partial matching" below.
+
+If you're upgrading an existing 1.0.0 install: `ALTER EXTENSION gsscode
+UPDATE;` handles it -- verified live, including confirming the unsound
+opfamily entry is actually gone from `pg_amop` afterward and that a
+fresh install of 1.1.0 (which still chains through the original 1.0.0
+script) ends up in the same corrected state.
 
 
 Format
@@ -57,15 +87,34 @@ The `%` and `!%` operators match a prefix: a bare country letter ('E'),
 a country+type ('E01'), or a full 9-character code. Any other length
 never matches -- rather than raising an error, which would make these
 operators unsafe to use directly against untrusted/user-supplied input.
-`%` is registered in the type's btree operator family, so it can drive
-an index scan directly:
-
-    SELECT * FROM areas WHERE gss % 'E01';   -- all English LSOAs
-    -- Index Scan using areas_gss_idx ...  Index Cond: (gss % 'E01'::text)
-
 An array form matches against several prefixes in one call:
 
+    SELECT * FROM areas WHERE gss % 'E01';                 -- all English LSOAs
     SELECT * FROM areas WHERE gss % ARRAY['E01','E02'];
+
+`%`/`!%` are plain boolean filters, not index-accelerated on their own
+-- an earlier version registered `%` in the type's btree operator family
+(as the "equality" strategy) specifically to get an index-assisted plan,
+but that was a real correctness bug, not just an unusual choice:
+PostgreSQL requires that strategy's operator to be a genuine equivalence
+relation for the planner's equivalence-class reasoning to stay sound,
+and `%` isn't one -- `a % 'SW1'` and `b % 'SW1'` can both hold with
+`a <> b`. Fixed in 1.1.0; see the "Fixed in 1.1.0" section below.
+
+For an indexed prefix search, use `range_lower()`/`range_upper()`
+instead -- they express the prefix as a genuine half-open range, using
+the ordinary (and ordinarily correct) `<`/`>=` strategies for full,
+sound index support:
+
+    SELECT * FROM areas
+    WHERE gss >= range_lower('E01') AND gss < range_upper('E01');
+    -- Index Only Scan using areas_gss_idx ...
+    --   Index Cond: ((gss >= 'E01000000'::gsscode) AND (gss < 'E02000000'::gsscode))
+
+Unlike `%`/`!%`, `range_lower()`/`range_upper()` raise an error on an
+invalid-length prefix rather than silently returning a value -- they're
+meant to be called with a literal, known-good prefix when constructing a
+query, not with arbitrary/untrusted input.
 
 Component accessors -- `country(gss)`, `gss_type(gss)`, `area(gss)` --
 are also available when you need to filter or group by a field directly
@@ -94,8 +143,12 @@ comparison the way a literal prefix is.
 
 Two ways to get indexed speed back:
 
-  - Prefer `%` directly when the pattern really is just an anchored
-    literal prefix: `gss % 'E03'` instead of `gss ~* '^E03'`.
+  - Prefer `range_lower()`/`range_upper()` when the pattern really is
+    just an anchored literal prefix: `gss >= range_lower('E03') AND
+    gss < range_upper('E03')` instead of `gss ~* '^E03'`. `%` alone is
+    cheaper per-row than a full regex match even without an index (a
+    plain integer-mask compare vs. running a compiled pattern), but it
+    won't get you an index scan -- see "Partial matching" above for why.
   - For `LEFT(gss, n) = 'literal'` queries specifically, a plain
     PostgreSQL expression index gets full index-scan speed with no
     extension code involved, since `left(gsscode, integer)` is
@@ -104,7 +157,8 @@ Two ways to get indexed speed back:
         CREATE INDEX ON areas (LEFT(gss, 3));
 
     Verified live against the real dataset: this produces the same
-    `Index Scan` plan and cost as the equivalent `%` query.
+    `Index Scan` plan and cost as the `range_lower()`/`range_upper()`
+    form.
 
 
 Rendering

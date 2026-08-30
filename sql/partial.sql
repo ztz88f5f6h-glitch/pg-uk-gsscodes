@@ -24,7 +24,9 @@ SELECT 'W01000001'::gsscode % ARRAY['E01','E02'];
 SELECT 'E01000001'::gsscode !% ARRAY['S01','S02'];
 SELECT 'E01000001'::gsscode % ARRAY[]::text[];
 
--- %% drives an index scan via the btree operator family
+-- %% correctness over a real table (not index-scan behaviour -- % is a
+-- plain boolean filter; see sql/range.sql for the index-scan-eligible
+-- range_lower()/range_upper() equivalent)
 CREATE TEMP TABLE partial_sample (code gsscode);
 INSERT INTO partial_sample
    SELECT ('E01' || lpad(i::text, 6, '0'))::gsscode FROM generate_series(1,50) i;

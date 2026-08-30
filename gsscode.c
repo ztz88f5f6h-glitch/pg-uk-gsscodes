@@ -32,6 +32,8 @@ Datum gsscode_isnan      (PG_FUNCTION_ARGS);
 Datum gsscode_cmp_partial (PG_FUNCTION_ARGS);
 Datum gsscode_eq_partial  (PG_FUNCTION_ARGS);
 Datum gsscode_ne_partial  (PG_FUNCTION_ARGS);
+Datum gsscode_range_lower (PG_FUNCTION_ARGS);
+Datum gsscode_range_upper (PG_FUNCTION_ARGS);
 
 // prefix_mask(5)  -> top 5 bits  (country only)
 // prefix_mask(12) -> top 12 bits (country+type)
@@ -158,6 +160,32 @@ Datum gsscode_gte (PG_FUNCTION_ARGS) {
 // and type are E/01, regardless of area. Invalid or wrongly-sized
 // prefixes never match anything rather than erroring, so these are safe
 // to use in a WHERE clause driven by untrusted/user-supplied input.
+//
+// % and !% are plain boolean filters ONLY -- they are deliberately NOT
+// registered as a btree operator family strategy. An earlier version of
+// this extension registered % under strategy 3 (the "equality" slot) to
+// get index-assisted prefix matching, but PostgreSQL requires strategy
+// 3's operator to be a genuine equivalence relation for the planner's
+// equivalence-class reasoning (join elimination, EquivalenceClass
+// merging) to stay sound -- see
+// https://www.postgresql.org/docs/current/xindex.html and the "Behavior
+// of B-Tree Operator Classes" section of the btree docs. % isn't one:
+// `a % 'SW1'` and `b % 'SW1'` can both hold with a <> b, since many
+// different codes share a prefix. Registering it as strategy 3 anyway
+// let the planner assume "both equal to the same prefix" implies "equal
+// to each other", which is false in general -- a correctness bug, not
+// just a missed optimization, even though it produced correct results
+// in the simple cases this was tested against. range_lower()/
+// range_upper() below are the sound replacement: they return real
+// gsscode bounds, usable with the ordinary (and ordinarily correct) </>=
+// strategies for full index support with no opfamily trickery.
+//
+// gsscode_cmp_partial itself is kept below, unused by anything in this
+// (1.1.0) version's own SQL, purely because gsscode--1.0.0.sql still
+// references it -- a fresh install chains through that script on its
+// way to 1.1.0, and dropping the C symbol would break installing (or
+// even just upgrading from) version 1.0.0. It can be removed only once
+// 1.0.0 is no longer a supported install target.
 
 PG_FUNCTION_INFO_V1(gsscode_cmp_partial);
 
@@ -206,6 +234,65 @@ Datum gsscode_ne_partial (PG_FUNCTION_ARGS) {
 
    uint32_t mask = prefix_mask(bits);
    PG_RETURN_BOOL((a & mask) != (b & mask));
+}
+
+
+// range_lower()/range_upper() -- the sound, index-friendly replacement
+// for indexed prefix matching (see the long comment above % / !%).
+// Together they express "matches prefix" as the genuinely correct
+// half-open range [range_lower(p), range_upper(p)):
+//
+//    WHERE code >= range_lower('E01') AND code < range_upper('E01')
+//
+// range_lower() is just the prefix's value with every unspecified
+// trailing field zeroed -- gsscode_parse_prefix() already returns
+// exactly that. range_upper() is the smallest value strictly greater
+// than every value matching the prefix: add one at the bit position
+// immediately above the masked region. Both raise an error for a
+// malformed prefix rather than silently returning a value, unlike %/!%
+// -- these are meant to be called with a literal, known-good prefix
+// when constructing a query, not with arbitrary/untrusted input the way
+// %/!% are designed to tolerate.
+//
+// Overflow note: range_upper()'s addition could in principle wrap a
+// uint32_t if the masked field were already at its maximum representable
+// bit pattern, but no value gsscode_parse_prefix() can actually produce
+// reaches that: country tops out at 25 ('Z') against a 5-bit field
+// (max 31), and type tops out at 99 against a 7-bit field (max 127) --
+// there's headroom in both, so no prefix reachable via real parsed text
+// can trigger it.
+
+PG_FUNCTION_INFO_V1(gsscode_range_lower);
+
+Datum gsscode_range_lower (PG_FUNCTION_ARGS) {
+   char *str = text_to_cstring(PG_GETARG_TEXT_P(0));
+   gsscode val; unsigned bits;
+   bool ok = gsscode_parse_prefix(str, &val, &bits);
+   pfree(str);
+
+   if (! ok)
+      ereport(ERROR, (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
+                      errmsg (_("invalid gsscode prefix")),
+                      errhint(_("expected a country letter, a country+type (eg \"E01\"), or a full 9-character code"))));
+
+   PG_RETURN_GSSCODE(val);
+}
+
+
+PG_FUNCTION_INFO_V1(gsscode_range_upper);
+
+Datum gsscode_range_upper (PG_FUNCTION_ARGS) {
+   char *str = text_to_cstring(PG_GETARG_TEXT_P(0));
+   gsscode val; unsigned bits;
+   bool ok = gsscode_parse_prefix(str, &val, &bits);
+   pfree(str);
+
+   if (! ok)
+      ereport(ERROR, (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
+                      errmsg (_("invalid gsscode prefix")),
+                      errhint(_("expected a country letter, a country+type (eg \"E01\"), or a full 9-character code"))));
+
+   PG_RETURN_GSSCODE(val + (1u << (32 - bits)));
 }
 
 
