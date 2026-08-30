@@ -177,28 +177,47 @@ ahead of the "(June 2025)" one used to seed this table, parsed all 206
 rows, and upserted them.
 
 **`gsscode_ons_refresh` extension** (optional) -- a separate extension
-(`requires = 'gsscode, plpython3u'`) adding one function,
-`update_gsscode_types()`, that does the same fetch/parse/upsert
-in-database via a single `SELECT`. It's deliberately a separate
-extension, not bundled into `gsscode` itself: most installations should
-never need to enable an untrusted language just to get the packed type
-and its operators. Two things worth knowing before reaching for this:
+(`requires = 'gsscode, http'`) adding one function,
+`update_gsscode_types()`, that refreshes the table via a single
+`SELECT`. It's deliberately a separate extension, not bundled into
+`gsscode` itself: most installations should never need to enable
+anything extra just to get the packed type and its operators.
 
-  - It requires `plpython3u`, which needs superuser to enable and is
-    disabled outright on many managed Postgres services. There's no way
-    around this that stays in a *trusted* language -- trusted PLs
-    (`plpgsql`, `pltcl`, trusted `plperl`) are sandboxed against network
-    access by design. The `http` extension alone doesn't get you there
-    either: ONS only publishes the RGC as a ZIP (confirmed -- no bare-CSV
-    endpoint, no queryable feature-service), and Postgres has no trusted,
-    built-in way to decompress one, so an HTTP-only path can fetch the
-    file but can't finish the job.
+The real obstacle to doing this in-database at all is that ONS only
+publishes the RGC as a ZIP (confirmed -- no bare-CSV endpoint, no
+queryable feature-service), and PostgreSQL has no trusted, built-in way
+to decompress one -- an HTTP-only path can fetch the file but can't
+finish the job on its own. Rather than reaching for an untrusted
+language (`plpython3u`) to do that decompression inside the database,
+the decompression happens outside it entirely: this repo's own GitHub
+Actions workflow (`.github/workflows/refresh-gsscode-types.yml`) fetches
+and unzips the current ONS release on a schedule, the same way
+`update_gsscode_types.py` does, and commits the parsed result as
+`data/gsscode_types.json`. `update_gsscode_types()` then only ever needs
+to do a plain HTTP GET of that file plus `jsonb_populate_recordset()` --
+both fully within PostgreSQL's trusted core. The whole function is
+`plpgsql` (a trusted language); the only non-default piece is `http`
+itself, which -- unlike `plpython3u` -- can only make HTTP requests,
+nothing more.
+
+Two things worth knowing before reaching for this:
+
+  - `http` still needs superuser to enable, same as any non-default
+    extension, and is unavailable on some managed Postgres services --
+    just a much narrower thing to grant than a general-purpose scripting
+    language.
+  - This shifts part of what you're trusting: instead of only ONS, you're
+    also trusting this repo's GitHub Actions pipeline and whoever has
+    write access to it. For most uses that's a reasonable trade, but it's
+    a real, new dependency, not just a strict improvement -- name it if
+    you're evaluating this for something that matters.
   - The Postgres server process itself needs outbound internet access to
-    arcgis.com. Many production database hosts deliberately firewall
-    that off, in which case this will simply time out -- the external
-    script has no such requirement since it can run from wherever you
-    have egress.
+    raw.githubusercontent.com. Many production database hosts
+    deliberately firewall that off, in which case this will simply time
+    out -- the external script has no such requirement since it can run
+    from wherever you have egress.
 
-Verified live: `SELECT update_gsscode_types();` returned 206, matching
-the external script's result exactly, via a real network fetch and ZIP
-decompression from inside the database process.
+Verified live: truncated `gsscode_types` to 0 rows, called
+`SELECT update_gsscode_types();`, got `206` back via a real HTTP fetch
+of the live file on GitHub and a real `jsonb_populate_recordset()`
+upsert -- no `plpython3u`, no untrusted language, anywhere in the path.
