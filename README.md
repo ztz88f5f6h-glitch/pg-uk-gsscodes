@@ -141,6 +141,24 @@ regex operator index-eligible, since most patterns (character classes,
 alternation, anything unanchored) aren't reducible to a single mask
 comparison the way a literal prefix is.
 
+Since 1.1.2, `=`/`<>` are also overloaded for `gsscode`/`text` in both
+argument orders -- useful when migrating one table at a time, so a
+`gsscode`-typed table can still be joined directly against another table
+whose own equivalent column hasn't been converted yet:
+
+    SELECT * FROM areas_typed a JOIN areas_legacy l ON a.gss = l.gss_text
+
+An `ASSIGNMENT` cast from `text` is also added, formalizing what already
+worked via Postgres's own I/O-function fallback even before this version
+(`INSERT INTO ... (gsscode_col) SELECT text_expr ...`). Deliberately not
+an `IMPLICIT` cast: that would let `gsscode` and `text` values coerce
+into each other in essentially any operator/function resolution or type
+unification, not just deliberate comparisons -- given `gsscode`'s input
+function is strict (raises on anything that isn't a valid 9-character
+code), that would silently widen where a bad text value can raise an
+error throughout a whole database, not just at the comparison points
+these two shims are aimed at.
+
 Two ways to get indexed speed back:
 
   - Prefer `gsscode_range_lower()`/`gsscode_range_upper()` when the pattern really is
