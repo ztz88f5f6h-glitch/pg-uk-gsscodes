@@ -1,62 +1,62 @@
 -- basic bounds: country only
-SELECT range_lower('E')::text;
- range_lower 
--------------
+SELECT gsscode_range_lower('E')::text;
+ gsscode_range_lower 
+---------------------
  E00000000
 (1 row)
 
-SELECT range_upper('E')::text;   -- first value of the next country, F
- range_upper 
--------------
+SELECT gsscode_range_upper('E')::text;   -- first value of the next country, F
+ gsscode_range_upper 
+---------------------
  F00000000
 (1 row)
 
 -- basic bounds: country+type
-SELECT range_lower('E01')::text;
- range_lower 
--------------
+SELECT gsscode_range_lower('E01')::text;
+ gsscode_range_lower 
+---------------------
  E01000000
 (1 row)
 
-SELECT range_upper('E01')::text; -- first value of the next type, E02
- range_upper 
--------------
+SELECT gsscode_range_upper('E01')::text; -- first value of the next type, E02
+ gsscode_range_upper 
+---------------------
  E02000000
 (1 row)
 
 -- full 9-character code: range of exactly one value
-SELECT range_lower('E01000001')::text;
- range_lower 
--------------
+SELECT gsscode_range_lower('E01000001')::text;
+ gsscode_range_lower 
+---------------------
  E01000001
 (1 row)
 
-SELECT range_upper('E01000001')::text;
- range_upper 
--------------
+SELECT gsscode_range_upper('E01000001')::text;
+ gsscode_range_upper 
+---------------------
  E01000002
 (1 row)
 
-SELECT range_lower('E01000001') = 'E01000001'::gsscode;
+SELECT gsscode_range_lower('E01000001') = 'E01000001'::gsscode;
  ?column? 
 ----------
  t
 (1 row)
 
-SELECT range_upper('E01000001') = 'E01000002'::gsscode;
+SELECT gsscode_range_upper('E01000001') = 'E01000002'::gsscode;
  ?column? 
 ----------
  t
 (1 row)
 
 -- invalid-length prefixes raise, unlike %/!% which just never match
-SELECT range_lower('E0100');
+SELECT gsscode_range_lower('E0100');
 ERROR:  invalid gsscode prefix
 HINT:  expected a country letter, a country+type (eg "E01"), or a full 9-character code
-SELECT range_lower('E0');
+SELECT gsscode_range_lower('E0');
 ERROR:  invalid gsscode prefix
 HINT:  expected a country letter, a country+type (eg "E01"), or a full 9-character code
-SELECT range_lower('');
+SELECT gsscode_range_lower('');
 ERROR:  invalid gsscode prefix
 HINT:  expected a country letter, a country+type (eg "E01"), or a full 9-character code
 -- the core soundness property: for every prefix length and every real
@@ -69,7 +69,7 @@ INSERT INTO range_sample
 INSERT INTO range_sample VALUES ('W01000001'), ('S01000001'), ('K02000001');
 SELECT count(*) AS disagreements FROM range_sample
 WHERE (code % 'E01')
-  IS DISTINCT FROM (code >= range_lower('E01') AND code < range_upper('E01'));
+  IS DISTINCT FROM (code >= gsscode_range_lower('E01') AND code < gsscode_range_upper('E01'));
  disagreements 
 ---------------
              0
@@ -77,7 +77,7 @@ WHERE (code % 'E01')
 
 SELECT count(*) AS disagreements FROM range_sample
 WHERE (code % 'E')
-  IS DISTINCT FROM (code >= range_lower('E') AND code < range_upper('E'));
+  IS DISTINCT FROM (code >= gsscode_range_lower('E') AND code < gsscode_range_upper('E'));
  disagreements 
 ---------------
              0
@@ -85,7 +85,7 @@ WHERE (code % 'E')
 
 -- range form actually returns the right rows
 SELECT count(*) FROM range_sample
-WHERE code >= range_lower('E01') AND code < range_upper('E01');
+WHERE code >= gsscode_range_lower('E01') AND code < gsscode_range_upper('E01');
  count 
 -------
     50
@@ -97,7 +97,7 @@ ANALYZE range_sample;
 -- no opfamily trickery) -- confirmed live via EXPLAIN separately, not
 -- asserted here since plan cost/text isn't stable output for pg_regress
 SELECT count(*) FROM range_sample
-WHERE code >= range_lower('E01') AND code < range_upper('E01');
+WHERE code >= gsscode_range_lower('E01') AND code < gsscode_range_upper('E01');
  count 
 -------
     50

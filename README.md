@@ -22,7 +22,7 @@ sequential scan.
 
 1.1.0 drops that opfamily registration entirely. `%`/`!%` are unchanged
 otherwise -- still correct, ordinary boolean filters -- but are no
-longer index-accelerated on their own. `range_lower()`/`range_upper()`
+longer index-accelerated on their own. `gsscode_range_lower()`/`gsscode_range_upper()`
 are the sound replacement, expressing a prefix as a genuine half-open
 range usable with the ordinary (and ordinarily correct) `<`/`>=`
 strategies. See "Partial matching" below.
@@ -101,17 +101,17 @@ relation for the planner's equivalence-class reasoning to stay sound,
 and `%` isn't one -- `a % 'SW1'` and `b % 'SW1'` can both hold with
 `a <> b`. Fixed in 1.1.0; see the "Fixed in 1.1.0" section below.
 
-For an indexed prefix search, use `range_lower()`/`range_upper()`
+For an indexed prefix search, use `gsscode_range_lower()`/`gsscode_range_upper()`
 instead -- they express the prefix as a genuine half-open range, using
 the ordinary (and ordinarily correct) `<`/`>=` strategies for full,
 sound index support:
 
     SELECT * FROM areas
-    WHERE gss >= range_lower('E01') AND gss < range_upper('E01');
+    WHERE gss >= gsscode_range_lower('E01') AND gss < gsscode_range_upper('E01');
     -- Index Only Scan using areas_gss_idx ...
     --   Index Cond: ((gss >= 'E01000000'::gsscode) AND (gss < 'E02000000'::gsscode))
 
-Unlike `%`/`!%`, `range_lower()`/`range_upper()` raise an error on an
+Unlike `%`/`!%`, `gsscode_range_lower()`/`gsscode_range_upper()` raise an error on an
 invalid-length prefix rather than silently returning a value -- they're
 meant to be called with a literal, known-good prefix when constructing a
 query, not with arbitrary/untrusted input.
@@ -143,9 +143,9 @@ comparison the way a literal prefix is.
 
 Two ways to get indexed speed back:
 
-  - Prefer `range_lower()`/`range_upper()` when the pattern really is
-    just an anchored literal prefix: `gss >= range_lower('E03') AND
-    gss < range_upper('E03')` instead of `gss ~* '^E03'`. `%` alone is
+  - Prefer `gsscode_range_lower()`/`gsscode_range_upper()` when the pattern really is
+    just an anchored literal prefix: `gss >= gsscode_range_lower('E03') AND
+    gss < gsscode_range_upper('E03')` instead of `gss ~* '^E03'`. `%` alone is
     cheaper per-row than a full regex match even without an index (a
     plain integer-mask compare vs. running a compiled pattern), but it
     won't get you an index scan -- see "Partial matching" above for why.
@@ -157,7 +157,7 @@ Two ways to get indexed speed back:
         CREATE INDEX ON areas (LEFT(gss, 3));
 
     Verified live against the real dataset: this produces the same
-    `Index Scan` plan and cost as the `range_lower()`/`range_upper()`
+    `Index Scan` plan and cost as the `gsscode_range_lower()`/`gsscode_range_upper()`
     form.
 
 
