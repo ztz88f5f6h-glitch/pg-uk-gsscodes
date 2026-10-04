@@ -19,6 +19,18 @@
          "version": "1.0.0"
       }
    },
+   "release_status": "stable",
+   "resources": {
+      "homepage": "https://github.com/ztz88f5f6h-glitch/pg-uk-gsscodes",
+      "bugtracker": {
+         "web": "https://github.com/ztz88f5f6h-glitch/pg-uk-gsscodes/issues"
+      },
+      "repository": {
+         "url": "https://github.com/ztz88f5f6h-glitch/pg-uk-gsscodes.git",
+         "web": "https://github.com/ztz88f5f6h-glitch/pg-uk-gsscodes",
+         "type": "git"
+      }
+   },
    "generated_by": "John Burns",
    "meta-spec": {
       "version": "1.0.0",

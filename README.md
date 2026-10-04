@@ -4,6 +4,26 @@ UK ONS/GSS geography code encoded in 32 bits and optimised for indexing
 and prefix matches.
 
 
+Installation and source
+-----------------------
+* **From PGXN:** `pgxn install gsscode`, then `CREATE EXTENSION gsscode;`
+  (https://pgxn.org/dist/gsscode/).
+* **From source:** https://github.com/ztz88f5f6h-glitch/pg-uk-gsscodes -- `make && sudo make install`
+  against the PostgreSQL you want it in (`pg_config` must be on the path, with the server development
+  headers installed). The same repository holds the issue tracker; please report bugs there.
+* **Releases:** each GitHub Release carries the exact archive that is published on PGXN. Both are built
+  by CI (`.github/workflows/pgxn-package.yml` builds and checks the package on every push and pull
+  request; `pgxn-release.yml` attaches it to a GitHub Release), from the version in `META.json`.
+* Upgrading an existing install: `ALTER EXTENSION gsscode UPDATE;`
+
+Renamed in 1.1.3
+----------------
+`is_valid(text)` is now **`is_valid_gss(text)`**. A bare `is_valid` collided with the `postcode`
+extension's `is_valid(text)` when both are installed in one database (as `range_lower`/`range_upper` did in
+1.1.1), and the `isn` extension has `is_valid()` overloads too. `ALTER EXTENSION gsscode UPDATE` renames the
+function in place, so nothing that depends on it is dropped, but **callers of `is_valid(text)` must change
+to `is_valid_gss(text)`**.
+
 Fixed in 1.1.0
 --------------
 1.0.0 registered `%` under btree strategy 3 (the "equality" slot) to get

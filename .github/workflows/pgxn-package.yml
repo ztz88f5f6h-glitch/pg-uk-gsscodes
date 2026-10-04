@@ -1,0 +1,92 @@
+name: Build PGXN package
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: Build and validate PGXN archive
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Read PGXN metadata
+        id: metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          name="$(jq -er '.name | select(type == "string" and length > 0)' META.json)"
+          version="$(jq -er '.version | select(type == "string" and length > 0)' META.json)"
+          {
+            echo "name=$name"
+            echo "version=$version"
+            echo "archive=$name-$version.zip"
+            echo "prefix=$name-$version/"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Build PGXN archive
+        env:
+          ARCHIVE: ${{ steps.metadata.outputs.archive }}
+          PREFIX: ${{ steps.metadata.outputs.prefix }}
+        run: |
+          set -euo pipefail
+          git archive \
+            --format=zip \
+            --prefix="$PREFIX" \
+            --output="$ARCHIVE" \
+            HEAD \
+            -- . ':(exclude).github' ':(exclude).gitignore'
+
+      - name: Validate PGXN archive
+        env:
+          ARCHIVE: ${{ steps.metadata.outputs.archive }}
+          PREFIX: ${{ steps.metadata.outputs.prefix }}
+          NAME: ${{ steps.metadata.outputs.name }}
+          VERSION: ${{ steps.metadata.outputs.version }}
+        run: |
+          set -euo pipefail
+          python3 - "$ARCHIVE" "$PREFIX" "$NAME" "$VERSION" <<'PY'
+          import json
+          import sys
+          import zipfile
+
+          archive, prefix, expected_name, expected_version = sys.argv[1:]
+          required = {
+              "META.json",
+              "LICENSE",
+              "Makefile",
+              "README.md",
+              "gsscode.control",
+          }
+
+          with zipfile.ZipFile(archive) as package:
+              if package.testzip() is not None:
+                  raise SystemExit("archive contains a corrupt member")
+
+              members = set(package.namelist())
+              expected_members = {prefix + path for path in required}
+              missing = expected_members - members
+              if missing:
+                  raise SystemExit(f"archive is missing required members: {sorted(missing)}")
+
+              metadata = json.loads(package.read(prefix + "META.json"))
+              if metadata.get("name") != expected_name:
+                  raise SystemExit("archive metadata name does not match its filename")
+              if metadata.get("version") != expected_version:
+                  raise SystemExit("archive metadata version does not match its filename")
+
+          print(f"Validated {archive}: {len(members)} members")
+          PY
+
+      - name: Upload PGXN archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: pgxn-${{ steps.metadata.outputs.name }}-${{ steps.metadata.outputs.version }}
+          path: ${{ steps.metadata.outputs.archive }}
+          if-no-files-found: error
+          retention-days: 7
