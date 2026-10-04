@@ -188,8 +188,11 @@ Output is always the canonical 9-character upper-case form, eg
 
 Validity and reserved/NaN codes
 --------------------------------
-`is_valid(text)` checks whether a string parses as a gsscode without
+`is_valid_gss(text)` checks whether a string parses as a gsscode without
 actually raising -- useful for filtering untrusted input before casting.
+(Called `is_valid(text)` up to 1.1.2; renamed in 1.1.3 because the name collided with
+the `postcode` extension's own `is_valid`. `ALTER EXTENSION gsscode UPDATE` renames it,
+so callers of `is_valid(text)` must change.)
 
 ONS reserves area=999999 within every type as a "no code assigned"
 placeholder -- eg `E00999999`, `E01999999`, `K99999999` -- confirmed

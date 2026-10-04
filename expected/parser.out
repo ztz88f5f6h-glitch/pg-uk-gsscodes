@@ -17,40 +17,40 @@ SELECT 'w00000001'::gsscode::text;  -- lowercase normalised to upper
  W00000001
 (1 row)
 
--- is_valid
-SELECT is_valid('E01000001');
- is_valid 
-----------
+-- is_valid_gss
+SELECT is_valid_gss('E01000001');
+ is_valid_gss 
+--------------
  t
 (1 row)
 
-SELECT is_valid('E0100000');    -- too short
- is_valid 
-----------
+SELECT is_valid_gss('E0100000');    -- too short
+ is_valid_gss 
+--------------
  f
 (1 row)
 
-SELECT is_valid('E010000011');  -- too long
- is_valid 
-----------
+SELECT is_valid_gss('E010000011');  -- too long
+ is_valid_gss 
+--------------
  f
 (1 row)
 
-SELECT is_valid('101000001');   -- no leading letter
- is_valid 
-----------
+SELECT is_valid_gss('101000001');   -- no leading letter
+ is_valid_gss 
+--------------
  f
 (1 row)
 
-SELECT is_valid('EA1000001');   -- non-digit in type
- is_valid 
-----------
+SELECT is_valid_gss('EA1000001');   -- non-digit in type
+ is_valid_gss 
+--------------
  f
 (1 row)
 
-SELECT is_valid('E01999999');   -- reserved code: still valid syntax
- is_valid 
-----------
+SELECT is_valid_gss('E01999999');   -- reserved code: still valid syntax
+ is_valid_gss 
+--------------
  t
 (1 row)
 

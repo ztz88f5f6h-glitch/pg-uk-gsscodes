@@ -1,0 +1,14 @@
+-- gsscode 1.1.2 -> 1.1.3: rename the SQL-level is_valid(text) to is_valid_gss(text).
+--
+-- Found 2026-10-04 testing postcode 2.0.0 on a copy of the production IDM database: postcode 2.0.0 adds
+-- an is_valid(text) of its own (does this text parse as a postal code), which collided outright with this
+-- extension's bare is_valid(text) ("function is_valid already exists with same argument types"), exactly
+-- as range_lower/range_upper collided with postcode in 1.1.1. A name this generic will be wanted by
+-- someone else (the isn extension has is_valid() too), so it now says what it validates.
+--
+-- ALTER ... RENAME, not DROP and CREATE: the function keeps its identity, so nothing that depends on it
+-- is dropped or rebuilt. Nothing in the production IDM database does (checked: no view, function, or
+-- constraint uses it, and pg_stat_statements has no calls).
+--
+-- Any caller of is_valid(text) must change to is_valid_gss(text).
+ALTER FUNCTION is_valid(text) RENAME TO is_valid_gss;

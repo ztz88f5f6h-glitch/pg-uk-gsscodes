@@ -2,7 +2,7 @@
    "name": "gsscode",
    "abstract": "UK ONS/GSS geography code type, packed into 32 bits",
    "description": "Packs a 9-character UK ONS/GSS statistical geography code (eg E01000001) into a 32-bit integer for fast indexing and prefix matching. Includes %/!% prefix-match operators (single or array of prefixes), sound index-assisted prefix search via gsscode_range_lower()/gsscode_range_upper(), text-compatibility shims (~, ~*, LEFT(), and gsscode/text equality) for queries written against the original text column, an ASSIGNMENT cast from text, isnan() for ONS's reserved/placeholder codes, and a private type-registry table (description()) seeded from and refreshable against the ONS Register of Geographic Codes.",
-   "version": "1.1.2",
+   "version": "1.1.3",
    "maintainer": [
       "John Burns <john@impactdatametrics.com>"
    ],
@@ -10,8 +10,8 @@
    "provides": {
       "gsscode": {
          "abstract": "UK ONS/GSS geography code type, packed into 32 bits",
-         "file": "gsscode--1.1.2.sql",
-         "version": "1.1.2"
+         "file": "gsscode--1.1.3.sql",
+         "version": "1.1.3"
       },
       "gsscode_ons_refresh": {
          "abstract": "Optional in-database refresh of gsscode_types via the http extension",
